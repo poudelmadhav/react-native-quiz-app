@@ -7,10 +7,9 @@
  */
 
 import React from 'react';
-import Welcome from './src/screens/Welcome';
+import 'react-native-gesture-handler';
+import AppNavigator from './src/navigations/AppNavigator';
 
-const App = () => {
-  return <Welcome />;
-};
+const App = () => <AppNavigator />;
 
 export default App;

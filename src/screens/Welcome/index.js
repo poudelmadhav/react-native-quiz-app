@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Welcome = () => {
+const Welcome = ({navigation}) => {
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#f9dbd2'}} />
@@ -23,7 +23,9 @@ const Welcome = () => {
             />
           </View>
           <View style={styles.bottom}>
-            <TouchableOpacity style={styles.buttonInput} onPress={() => {}}>
+            <TouchableOpacity
+              style={styles.buttonInput}
+              onPress={() => navigation.navigate('Question')}>
               <Text style={styles.buttonText}>{'Start Quiz'}</Text>
             </TouchableOpacity>
           </View>
