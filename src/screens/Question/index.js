@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -6,33 +6,66 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-const Question = ({navigation}) => (
-  <>
-    <SafeAreaView style={{flex: 0, backgroundColor: '#f9dbd2'}} />
-    <SafeAreaView style={{flex: 1, backgroundColor: '#1b1f22'}}>
-      <View style={styles.container}>
-        <View style={styles.top}>
-          <Text style={[styles.text, styles.currentQuestion]}>1/10</Text>
-          <Text style={[styles.text]}>Question</Text>
+import questions from '../../services/data/questions.json';
+const Question = ({ navigation }) => {
+  const [state, setState] = useState({
+    currentQn: 0,
+    end: false,
+    wrongAns: false,
+  });
+
+  const handleAnswer = (selectedAns) => {
+    const newState = {...state};
+
+    if (selectedAns === questions[state.currentQn].correct) {
+      if (state.currentQn < questions.length - 1) {
+        newState.currentQn = state.currentQn + 1;
+      } else {
+        newState.end = true;
+      }
+    } else {
+      newState.wrongAns = true;
+    }
+    setState(newState);
+  };
+
+  useEffect(() => {
+    if (state.end || state.wrongAns) {
+      navigation.navigate({
+        name: state.end ? 'Result' : 'Gameover',
+      });
+    }
+  }, [navigation, state]);
+
+  return (
+    <>
+      <SafeAreaView style={{ flex: 0, backgroundColor: '#f9dbd2' }} />
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#1b1f22' }}>
+        <View style={styles.container}>
+          <View style={styles.top}>
+            <Text style={[styles.text, styles.currentQuestion]}>
+              {state.currentQn + 1}/{questions.length}
+            </Text>
+            <Text style={[styles.text]}>
+              {state.currentQn + 1}. {questions[state.currentQn].title}
+            </Text>
+          </View>
+          <View style={styles.bottom}>
+            {questions[state.currentQn].options.map((q, i) => (
+              <TouchableOpacity
+                style={styles.buttonInput}
+                onPress={() => handleAnswer(i)}
+                key={i}>
+                <Text style={styles.buttonText}>{q}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
-        <View style={styles.bottom}>
-          <TouchableOpacity style={styles.buttonInput} onPress={() => {}}>
-            <Text style={styles.buttonText}>{'1'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonInput} onPress={() => {}}>
-            <Text style={styles.buttonText}>{'2'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonInput} onPress={() => {}}>
-            <Text style={styles.buttonText}>{'3'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonInput} onPress={() => {}}>
-            <Text style={styles.buttonText}>{'4'}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </SafeAreaView>
-  </>
-);
+      </SafeAreaView>
+    </>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

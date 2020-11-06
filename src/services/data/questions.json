@@ -1,0 +1,22 @@
+[
+  {
+    "title": "In React what is used to pass data to a component from outside?",
+    "options": ["setState", "props", "PropTypes", "render with arguments"],
+    "correct": 1
+  },
+  {
+    "title": "How many elements does a react component return? ",
+    "options": ["1", "2", "3", "4"],
+    "correct": 0
+  },
+  {
+    "title": "What is Babel? ",
+    "options": [
+      "A Traspiler",
+      "An Interpreter",
+      "A compiler",
+      "Compiler and Transpiler"
+    ],
+    "correct": 0
+  }
+]
