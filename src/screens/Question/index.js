@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   Text,
   View,
@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import questions from '../../services/data/questions.json';
-const Question = ({ navigation }) => {
+import {useFocusEffect} from '@react-navigation/native';
+const Question = ({navigation}) => {
   const [state, setState] = useState({
     currentQn: 0,
     end: false,
@@ -36,6 +37,16 @@ const Question = ({ navigation }) => {
       });
     }
   }, [navigation, state]);
+
+  useFocusEffect(
+    useCallback(() => {
+      setState({
+        currentQn: 0,
+        end: false,
+        wrongAns: false,
+      });
+    }, []),
+  );
 
   return (
     <>
