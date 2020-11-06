@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   Text,
   View,
@@ -8,7 +8,38 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import {useFocusEffect} from '@react-navigation/native';
+
 const Welcome = ({navigation}) => {
+  const [name, setName] = useState({
+    value: '',
+    isValid: false,
+    isSubmitted: false,
+  });
+
+  const handleInput = (value) => {
+    if (value === '') {
+      setName({value: '', isSubmitted: false, isValid: false});
+    } else {
+      setName({...name, value, isValid: true});
+    }
+  };
+
+  const startQuiz = () => {
+    if (name.value !== '') {
+      navigation.navigate({
+        name: 'Question',
+      });
+    } else {
+      setName({...name, isSubmitted: true});
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      setName({value: '', isSubmitted: false, isValid: false});
+    }, []),
+  );
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#f9dbd2'}} />
@@ -16,16 +47,20 @@ const Welcome = ({navigation}) => {
         <View style={styles.container}>
           <View style={styles.top}>
             <TextInput
-              onChangeText={() => {}}
+              onChangeText={(value) => handleInput(value)}
               placeholder={'Input your name'}
               placeholderTextColor={'white'}
-              style={styles.textInput}
+              style={[
+                styles.textInput,
+                name.isSubmitted && !name.isValid ? styles.invalid : {},
+              ]}
+              value={name.value}
             />
           </View>
           <View style={styles.bottom}>
             <TouchableOpacity
               style={styles.buttonInput}
-              onPress={() => navigation.navigate('Question')}>
+              onPress={() => startQuiz()}>
               <Text style={styles.buttonText}>{'Start Quiz'}</Text>
             </TouchableOpacity>
           </View>
@@ -72,6 +107,10 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: 'white',
     textAlign: 'center',
+  },
+  invalid: {
+    borderBottomWidth: 2,
+    borderBottomColor: 'red',
   },
 });
 

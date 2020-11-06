@@ -13,8 +13,8 @@ const gameoverImage = require('../../assets/images/gameover.jpg');
 const Gameover = ({navigation}) => {
   return (
     <>
-      <SafeAreaView style={{ flex: 0, backgroundColor: '#f9dbd2' }} />
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#f9dbd2' }}>
+      <SafeAreaView style={{flex: 0, backgroundColor: '#f9dbd2'}} />
+      <SafeAreaView style={{flex: 1, backgroundColor: '#f9dbd2'}}>
         <View style={styles.container}>
           <ImageBackground source={gameoverImage} style={styles.bg_image}>
             <View style={styles.top}>
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   },
   bg_image: {
     flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center"
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
 });
 

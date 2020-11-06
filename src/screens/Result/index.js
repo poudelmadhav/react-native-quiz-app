@@ -13,12 +13,12 @@ const gamewonImage = require('../../assets/images/gamewon.jpg');
 const Result = ({navigation}) => {
   return (
     <>
-      <SafeAreaView style={{ flex: 0, backgroundColor: '#f9dbd2' }} />
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#1b1f22' }}>
+      <SafeAreaView style={{flex: 0, backgroundColor: '#f9dbd2'}} />
+      <SafeAreaView style={{flex: 1, backgroundColor: '#1b1f22'}}>
         <View style={styles.container}>
-        <ImageBackground source={gamewonImage} style={styles.bg_image}>
+          <ImageBackground source={gamewonImage} style={styles.bg_image}>
             <View style={styles.top}>
-              <Text style={styles.gameStatus}> Game Won</Text>
+              <Text style={styles.gameStatus}>You Won</Text>
               <TouchableOpacity
                 style={styles.buttonInput}
                 onPress={() => navigation.navigate('Welcome')}>
@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
   },
   bg_image: {
     flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center"
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
 });
 

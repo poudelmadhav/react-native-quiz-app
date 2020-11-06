@@ -8,11 +8,14 @@ import {
 } from 'react-native';
 import questions from '../../services/data/questions.json';
 import {useFocusEffect} from '@react-navigation/native';
+import shuffle from '../../utils/shuffle';
+
 const Question = ({navigation}) => {
   const [state, setState] = useState({
     currentQn: 0,
     end: false,
     wrongAns: false,
+    questions: questions,
   });
 
   const handleAnswer = (selectedAns) => {
@@ -44,27 +47,44 @@ const Question = ({navigation}) => {
         currentQn: 0,
         end: false,
         wrongAns: false,
+        questions: shuffle(questions),
       });
     }, []),
   );
 
   return (
     <>
-      <SafeAreaView style={{ flex: 0, backgroundColor: '#f9dbd2' }} />
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#1b1f22' }}>
-        <View style={styles.container}>
+      <SafeAreaView
+        style={[
+          {flex: 0, backgroundColor: '#f9dbd2'},
+          {backgroundColor: colors[state.currentQn]},
+        ]}
+      />
+      <SafeAreaView
+        style={[
+          {flex: 1, backgroundColor: '#1b1f22'},
+          {backgroundColor: colors[state.currentQn]},
+        ]}>
+        <View
+          style={[
+            styles.container,
+            {backgroundColor: colors[state.currentQn]},
+          ]}>
           <View style={styles.top}>
             <Text style={[styles.text, styles.currentQuestion]}>
-              {state.currentQn + 1}/{questions.length}
+              {state.currentQn + 1}/{state.questions.length}
             </Text>
             <Text style={[styles.text]}>
-              {state.currentQn + 1}. {questions[state.currentQn].title}
+              {state.currentQn + 1}. {state.questions[state.currentQn].title}
             </Text>
           </View>
           <View style={styles.bottom}>
-            {questions[state.currentQn].options.map((q, i) => (
+            {state.questions[state.currentQn].options.map((q, i) => (
               <TouchableOpacity
-                style={styles.buttonInput}
+                style={[
+                  styles.buttonInput,
+                  {backgroundColor: colors[state.currentQn]},
+                ]}
                 onPress={() => handleAnswer(i)}
                 key={i}>
                 <Text style={styles.buttonText}>{q}</Text>
@@ -76,6 +96,8 @@ const Question = ({navigation}) => {
     </>
   );
 };
+
+const colors = ['#ffdc40', '#b697ff', '#196bfb'];
 
 const styles = StyleSheet.create({
   container: {
