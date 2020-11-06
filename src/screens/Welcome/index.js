@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 
 import {useFocusEffect} from '@react-navigation/native';
@@ -27,6 +28,7 @@ const Welcome = ({navigation}) => {
 
   const startQuiz = () => {
     if (name.value !== '') {
+      Keyboard.dismiss();
       navigation.navigate({
         name: 'Question',
       });
